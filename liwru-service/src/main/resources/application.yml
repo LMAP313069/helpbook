@@ -1,0 +1,16 @@
+server:
+  port: 9000
+
+spring:
+
+  datasource:
+    url: jdbc:mysql://proyecto21.mysql.database.azure.com:3306/liwru-bcp
+    username: proyecto2021@proyecto21
+    password: '(ISIL$2021)++'
+
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+

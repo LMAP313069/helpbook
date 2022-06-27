@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Editar Incidencia</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="https://liwru.s3.amazonaws.com/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <link href="https://liwru.s3.amazonaws.com/css/sb-admin-2.css" rel="stylesheet">
+  <!-- Custom styles for this page -->
+  <link href="https://liwru.s3.amazonaws.com/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+      <img src="https://liwru.s3.amazonaws.com/img/logo.svg" alt="" style="height: 100%; width: auto;">
+    </a>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/incidencias">
+        <span>Incidencias</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/agraviados">
+        <span>Agraviados</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/usuarios">
+        <span>Usuarios</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+         aria-expanded="true" aria-controls="collapseTwo">
+        <span>Ajustes</span>
+      </a>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="/ajustes/empresa">Empresa</a>
+          <a class="collapse-item" href="/ajustes/sedes">Sedes</a>
+          <a class="collapse-item" href="/ajustes/motivos">Motivos</a>
+          <a class="collapse-item" href="/ajustes/estados">Estados</a>
+        </div>
+      </div>
+    </li>
+
+    <div class="text-center d-none d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+  </ul>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+      <!-- Topbar -->
+      <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"> <!--th:fragment="topbar"-->
+
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+
+        <!-- Nav Item - Alerts -->
+        <li class="nav-item dropdown no-arrow mx-1">
+        </li>
+
+        <!-- Nav Item - Messages -->
+
+
+        <div class="topbar-divider d-none d-sm-block"></div>
+
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.sessionUser.getNombreUsuario() +' '+session.sessionUser.getApellidoUsuario()}">  </span>
+                <img class="img-profile rounded-circle"
+                     th:src="@{/img/undraw_profile.svg}">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                 aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a th:href="@{/logout}" class="dropdown-item"   data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+            </div>
+        </li>
+
+    </ul>
+
+</nav>
+      <!-- End of Topbar -->
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+
+        <form action="#" method="post" th:action="@{/incidencias/save}" th:object="${incidencia}">
+
+          <input type="hidden" class="form-control" id="estado" name="estado" th:field="*{idIncidencia}">
+          <!--oculto jejej-->
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary" >
+                    Incidencia Nro.
+                    <input type="text" class="form-control form-control-user" id="codigo" name="codigo"
+                           value="" th:field="*{codigoIncidencia}" disabled>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card shadow mb-4">
+                <div class="card-body">
+                  <div class="form-group">
+                    <a>Agraviado</a>
+                    <input type="text" class="form-control form-control-user" id="agraviado" name="agraviado"
+                           value="" th:field="*{agraviado.clienteNombre}" disabled>
+                  </div>
+                  <div class="form-group">
+                    <a>Fecha incidencia</a>
+                    <input type="text" class="form-control form-control-user" id="fechainc" name="fechainc"
+                           value="" th:field="*{fechaIncidencia}" disabled>
+                  </div>
+                  <div class="form-group">
+                    <a>Tipo incidencia</a>
+                    <input type="text" class="form-control form-control-user" id="tipoinc" name="tipoinc"
+                           value="" th:field="*{tipoIncidencia.descripcion}" disabled>
+                  </div>
+                  <div class="form-group">
+                    <a>Motivo</a>
+                    <input type="text" class="form-control form-control-user" id="motivo" name="motivo"
+                           value="" th:field="*{motivo.estadoDescripcion}" disabled>
+                  </div>
+                  <th:block th:switch="*{tipoAtencion}">
+                  <div class="form-group" th:case="'1'">
+                    <a>Sede</a>
+                    <input type="text" class="form-control form-control-user" id="sede" name="sede"
+                           value="" th:field="*{sede.nombre}" disabled>
+                  </div>
+                  </th:block>
+                  <div class="form-group">
+                    <a>Documento de Evidencia</a>
+                    <input type="text" class="form-control form-control-user" id="docevi" name="docevi"
+                           value="" th:field="*{fileDocs}" disabled>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="card shadow mb-4">
+                <div class="card-body">
+                  <div class="form-group">
+                    <a>Detalles de Incidencia</a>
+                    <input type="text" class="form-control form-control-user" id="detalleinci" name="detalleinci"
+                           value="" th:field="*{detalleIncidencia}" disabled>
+                  </div>
+                  <div class="form-group">
+                    <a>Pedido de Incidencia</a>
+                    <input type="text" class="form-control form-control-user" id="pedidoInc" name="pedidoInc"
+                           value="" th:field="*{pedidoIncidencia}" disabled>
+                  </div>
+                  <th:block th:switch="*{tipoContacto}">
+                  <div class="form-group" th:case="'0'">
+                    <a>Correo electrónico;</a>
+                    <input type="text" class="form-control form-control-user" id="" name="tipocont"
+                           value="usuario.correo" disabled>
+                  </div>
+                  <div class="form-group" th:case="'1'">
+                    <a>Número de celular:</a>
+                    <input type="text" class="form-control form-control-user" id="tipocont" name="tipocont"
+                           value="usuario.celular" disabled>
+                  </div>
+                  </th:block>
+                  <div class="form-group" style="">
+                    <a>Estado</a> <br>
+                    <select class="custom-select custom-select-sm form-control form-control-sm" th:field="*{idEstado}">
+                      <option th:each="esta:${estado}"
+                              th:value="${esta.idEstado}"
+                              th:text="${esta.estadoDescripcion}"
+                              th:selected="${esta.idEstado}"></option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <a>Responsable</a> <br>
+                    <select class="custom-select custom-select-sm form-control form-control-sm" th:field="*{idUsuario}">
+                      <option th:each="usuR:${usuarioRol}"
+                              th:value="${usuR.idUsuario}"
+                              th:text="${usuR.nombreUsuario}"
+                              th:selected="${usuR.idUsuario}"></option>
+                    </select>
+                  </div>
+                  <!-- si existeFile es 1 -->
+                  <div class="form-group">
+                    <span>Documentos</span>
+                    <ul>
+                      <li>
+                        <a href="#">documento1.jpg</a>
+                      </li>
+                      <li>
+                        <a href="#">documento2.pdf</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="form-group">
+                    <span>Justificación</span>
+                    <textarea name="" id="" cols="30" rows="10">
+                      Lorem ipsum dolor sit amet
+                    </textarea>
+                  </div>
+                  <div class="form-group">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <input type="submit" class="btn btn-success btn-user btn-block" value="Guardar">
+                        </div>
+                        <div class="col-md-6">
+                          <a href="../../incidencias" class="btn btn-danger btn-user btn-block">Cancelar</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white" th:fragment="footer"> <!--th:fragment="footer""-->
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>Copyright &copy; BMO Software - ISIL 2021-2</span>
+        </div>
+    </div>
+</footer>
+
+    <!-- End of Footer -->
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="login.html">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Bootstrap core JavaScript-->
+<script src="https://liwru.s3.amazonaws.com/vendor/jquery/jquery.min.js"></script>
+<script src="https://liwru.s3.amazonaws.com/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- CorluginavaScript-->
+<script src="https://liwru.s3.amazonaws.com/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Cus scris for all pages-->
+<script src="https://liwru.s3.amazonaws.com/js/sb-admin-2.min.js"></script>
+
+<!-- Pagevel ugins -->
+<script src="https://liwru.s3.amazonaws.com/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="https://liwru.s3.amazonaws.com/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Pagevel stom scripts -->
+<script src="https://liwru.s3.amazonaws.com/js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>

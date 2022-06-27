@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Editar Agraviado</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="https://liwru.s3.amazonaws.com/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://liwru.s3.amazonaws.com/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Custom styles for this page -->
+    <link href="https://liwru.s3.amazonaws.com/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+      <img src="https://liwru.s3.amazonaws.com/img/logo.svg" alt="" style="height: 100%; width: auto;">
+    </a>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/incidencias">
+        <span>Incidencias</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/agraviados">
+        <span>Agraviados</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/usuarios">
+        <span>Usuarios</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+         aria-expanded="true" aria-controls="collapseTwo">
+        <span>Ajustes</span>
+      </a>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="/ajustes/empresa">Empresa</a>
+          <a class="collapse-item" href="/ajustes/sedes">Sedes</a>
+          <a class="collapse-item" href="/ajustes/motivos">Motivos</a>
+          <a class="collapse-item" href="/ajustes/estados">Estados</a>
+        </div>
+      </div>
+    </li>
+
+    <div class="text-center d-none d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+  </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"> <!--th:fragment="topbar"-->
+
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+
+        <!-- Nav Item - Alerts -->
+        <li class="nav-item dropdown no-arrow mx-1">
+        </li>
+
+        <!-- Nav Item - Messages -->
+
+
+        <div class="topbar-divider d-none d-sm-block"></div>
+
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.sessionUser.getNombreUsuario() +' '+session.sessionUser.getApellidoUsuario()}">  </span>
+                <img class="img-profile rounded-circle"
+                     th:src="@{/img/undraw_profile.svg}">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                 aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a th:href="@{/logout}" class="dropdown-item"   data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+            </div>
+        </li>
+
+    </ul>
+
+</nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <form  method="POST"  th:object="${agraviado}">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary" th:text="*{clienteNombre +' '+ clienteApePat+' '+clienteApeMat  }"></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <a>Nombres</a>
+                                    <input type="text" class="form-control form-control-user" id="nombres" name="nombres"
+                                           value=""  th:field="*{clienteNombre}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <a>Apellido Materno</a>
+                                    <input type="text" class="form-control form-control-user" id="apemat" name="apemat"
+                                           value="" th:field="*{clienteApeMat}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <a>Apellido Paterno</a>
+                                    <input type="text" class="form-control form-control-user" id="apepat" name="apepat"
+                                           value="" th:field="*{clienteApePat}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <a>Email</a>
+                                    <input type="text" class="form-control form-control-user" id="email" name="email"
+                                           value="" th:field="*{clienteEmail}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <a>Teléfono</a>
+                                    <input type="text" class="form-control form-control-user" id="telefono" name="telefono"
+                                           value="" th:field="*{clienteTelefono}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <a>Dirección</a>
+                                    <input type="text" class="form-control form-control-user" id="direccion" name="direccion"
+                                           value="" th:field="*{clienteDireccion}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <a>Tipo Documento</a>
+                                    <input type="text" class="form-control form-control-user" id="tipodoc" name="tipodoc"
+                                           value="" th:field="*{tipoDocumento.descripcion}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <a>Numero Documento</a>
+                                    <input type="text" class="form-control form-control-user" id="nrodoc" name="nrodoc"
+                                           value="" th:field="*{clienteNroDoc}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <a>Departamento</a>
+                                    <input type="text" class="form-control form-control-user" id="departamento" name="departamento"
+                                           value="" th:field="*{distrito.provincia.departamento.nombre}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <a>Provincia</a>
+                                    <input type="text" class="form-control form-control-user" id="provincia" name="provincia"
+                                           value="" th:field="*{distrito.provincia.nombre}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <a>Distrito</a>
+                                    <input type="text" class="form-control form-control-user" id="distrito" name="distrito"
+                                           value="" th:field="*{distrito.nombre}" readonly>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="../../agraviados" class="btn btn-danger btn-user btn-block">Volver</a>
+                                    </div>
+                                    <div class="col-4">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Solo si es usuario tipo 2 -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Incidencias</h6>
+                            </div>
+                            <div class="card-body" th:switch="incidenciasAgraviados">
+                                <div class="table-responsive"  th:case="*">
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Responsable</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="inciAgra : ${incidenciasAgraviados}">
+                                            <td class="border-left-primary" th:text="${inciAgra.codigoIncidencia} ">
+                                            </td>
+                                            <td th:text="${inciAgra.usuario.nombreUsuario}">
+
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white" th:fragment="footer"> <!--th:fragment="footer""-->
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>Copyright &copy; BMO Software - ISIL 2021-2</span>
+        </div>
+    </div>
+</footer>
+
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{https://liwru.s3.amazonaws.com/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{https://liwru.s3.amazonaws.com/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- Core plugin JavaScript-->
+<script th:src="@{https://liwru.s3.amazonaws.com/vendor/jquery-easing/jquery.easing.min.js}"></script>
+<!-- Custom scripts for all pages-->
+<script th:src="@{https://liwru.s3.amazonaws.com/js/sb-admin-2.min.js}"></script>
+<!-- Page level plugins -->
+<script th:src="@{https://liwru.s3.amazonaws.com/vendor/chart.js/Chart.min.js}"></script>
+<script th:src="@{https://liwru.s3.amazonaws.com/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{https://liwru.s3.amazonaws.com/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<!-- Page level custom scripts -->
+<script th:src="@{https://liwru.s3.amazonaws.com/js/demo/datatables-demo.js}"></script>
+
+</body>
+
+</html>
